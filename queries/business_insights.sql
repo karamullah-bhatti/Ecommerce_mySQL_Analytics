@@ -28,3 +28,15 @@ INNER JOIN orders as o ON p.product_id = o.product_id
 GROUP BY category
 ORDER BY catagory_wise_sell DESC
 LIMIT 1;
+
+-- 4. Which customer has spent the most?
+
+SELECT
+	c.customer_name , SUM(o.total_amount) as customer_money_spent
+FROM customers as c
+INNER JOIN orders as o ON c.customer_id = o.customer_id
+GROUP BY customer_name
+ORDER BY customer_money_spent DESC
+LIMIT 1;
+
+-- 5.

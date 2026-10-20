@@ -62,3 +62,24 @@ SELECT
 	SUM(total_amount) as monthly_revenue from orders
 GROUP BY month_name ,years_month
 ORDER BY years_month ASC;
+
+-- 8. Find the customers Who Never Placed an Order
+
+SELECT 
+	c.customer_name, c.customer_id
+FROM customers AS c
+LEFT JOIN orders AS o 
+	ON c.customer_id = o.customer_id
+WHERE o.customer_id IS NULL;   
+--for my dataset , all 15 customers have placed at least one order, so this query should return zero rows.
+
+-- 9. Products That Have Never Been Sold
+
+SELECT 
+	p.product_id, p.product_name
+FROM products AS p
+LEFT JOIN orders AS o 
+	ON p.product_id = o.product_id
+WHERE o.order_id IS NULL;
+
+-- 10. 

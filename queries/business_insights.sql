@@ -82,4 +82,15 @@ LEFT JOIN orders AS o
 	ON p.product_id = o.product_id
 WHERE o.order_id IS NULL;
 
--- 10. 
+-- 10. Revenue Percentage by Category
+
+SELECT 
+	p.category, 
+    SUM(o.total_amount) as category_revenue,
+	ROUND(((SUM(o.total_amount) / (SELECT SUM(total_amount) FROM orders)) * 100),2) as revenue_percentage
+FROM products AS p
+LEFT JOIN orders AS o 
+	ON p.product_id = o.product_id
+GROUP BY p.category
+ORDER BY revenue_percentage DESC;
+

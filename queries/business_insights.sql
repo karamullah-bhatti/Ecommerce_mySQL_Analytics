@@ -39,4 +39,12 @@ GROUP BY customer_name
 ORDER BY customer_money_spent DESC
 LIMIT 1;
 
--- 5.
+-- 5. Which region generates the highest revenue?
+
+SELECT
+	c.region , SUM(o.total_amount) as region_revenue
+FROM customers as c
+INNER JOIN orders as o ON c.customer_id = o.customer_id
+GROUP BY c.region
+ORDER BY region_revenue DESC
+LIMIT 1;

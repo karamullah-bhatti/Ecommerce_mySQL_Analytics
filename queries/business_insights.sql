@@ -48,3 +48,10 @@ INNER JOIN orders as o ON c.customer_id = o.customer_id
 GROUP BY c.region
 ORDER BY region_revenue DESC
 LIMIT 1;
+
+-- 6. Average Order Value
+
+SELECT
+	AVG(total_amount) as AVG_amount_perOrder FROM orders;
+
+-- 7. 

@@ -54,4 +54,11 @@ LIMIT 1;
 SELECT
 	AVG(total_amount) as AVG_amount_perOrder FROM orders;
 
--- 7. 
+-- 7. Monthly Revenue Trends Analysis
+
+SELECT
+	date_format(order_date, '%Y-%m') AS years_month,
+	MONTHNAME(order_date) AS month_name, 
+	SUM(total_amount) as monthly_revenue from orders
+GROUP BY month_name ,years_month
+ORDER BY years_month ASC;

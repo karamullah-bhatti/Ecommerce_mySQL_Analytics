@@ -94,3 +94,14 @@ LEFT JOIN orders AS o
 GROUP BY p.category
 ORDER BY revenue_percentage DESC;
 
+-- 11. Who Are the Top 5 Customers?
+
+SELECT 
+	c.customer_name, 
+    SUM(o.total_amount) as customer_spent
+FROM customers AS c
+INNER JOIN orders AS o 
+	ON c.customer_id = o.customer_id
+GROUP BY c.customer_id,c.customer_name
+ORDER BY customer_spent DESC
+LIMIT 5;

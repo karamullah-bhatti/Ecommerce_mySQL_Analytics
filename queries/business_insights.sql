@@ -105,3 +105,9 @@ INNER JOIN orders AS o
 GROUP BY c.customer_id,c.customer_name
 ORDER BY customer_spent DESC
 LIMIT 5;
+
+-- 12. Average Quantity Per Order
+
+SELECT 
+	avg(quantity) AS average_quantity_per_order 
+FROM orders;

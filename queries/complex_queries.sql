@@ -42,3 +42,22 @@ FROM category_totals
 ORDER BY revenue_percentage DESC;
 
 
+-- Challenge 3: Customer Purchase Gaps
+-- Uses a CTE and LEAD() to identify each customer's next purchase
+-- and calculates the number of days between consecutive orders.
+
+WITH cte AS(
+SELECT 
+	order_id,
+    customer_id,
+    order_date,
+    lead(order_date) OVER (Partition BY customer_id ORDER BY order_date) AS next_order
+FROM orders)
+
+SELECT 
+	customer_id,
+    order_date,
+    next_order,
+    DATEDIFF(next_order,order_date) AS order_gap
+FROM cte
+WHERE customer_id = 1;

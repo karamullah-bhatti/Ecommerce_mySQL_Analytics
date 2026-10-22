@@ -61,3 +61,25 @@ SELECT
     DATEDIFF(next_order,order_date) AS order_gap
 FROM cte
 WHERE customer_id = 1;
+
+
+-- Challenge 4: Regional Category Revenue Ranking
+-- Uses a CTE to calculate category revenue by region and DENSE_RANK()
+-- to rank categories within each region based on total revenue.
+
+WITH calculated_revenue AS (SELECT
+	p.category,
+    c.region,
+    sum(o.total_amount) AS category_revenue
+From products As p
+JOIN orders AS o ON p.product_id = o.product_id
+JOIN customers AS c ON c.customer_id = o.customer_id
+GROUP BY p.category,c.region)
+
+SELECT
+	category,
+    region,
+    category_revenue,
+    dense_rank() over(partition by region ORDER BY category_revenue DESC) AS rank_of_category
+FROM calculated_revenue
+order by region,category_revenue DESC;

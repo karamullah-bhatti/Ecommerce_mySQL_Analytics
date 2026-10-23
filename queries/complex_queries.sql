@@ -83,3 +83,19 @@ SELECT
     dense_rank() over(partition by region ORDER BY category_revenue DESC) AS rank_of_category
 FROM calculated_revenue
 order by region,category_revenue DESC;
+
+
+-- Challenge 5: Order Classification
+-- Uses CASE to classify orders based on quantity and total amount,
+-- separating them into High-Value Bulk, Medium Bundle, or Standard Single.
+
+SELECT
+	order_id,
+    quantity,
+    total_amount,
+    CASE
+		WHEN quantity >= 3 OR total_amount >= 500 THEN 'High-value Bulk'
+        WHEN quantity = 2 THEN 'Medium Bundle'
+        ELSE 'Standard Single'
+	END AS order_type
+FROM orders;

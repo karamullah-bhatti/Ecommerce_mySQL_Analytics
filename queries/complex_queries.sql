@@ -99,3 +99,27 @@ SELECT
         ELSE 'Standard Single'
 	END AS order_type
 FROM orders;
+
+
+-- Challenge 6: Regional Customer Spending Analysis
+-- Helps the business identify its top-spending customers in each region
+-- using CTEs and DENSE_RANK() to support targeted loyalty rewards.
+
+WITH total_spending AS (SELECT
+	customer_name,
+    region,
+    SUM(total_amount) AS total_spent
+FROM orders
+INNER JOIN customers ON orders.customer_id = customers.customer_id
+Group by customer_name,region),
+assign_rank AS(SELECT 
+	customer_name,
+    region,
+    total_spent,
+    dense_rank() OVER (partition BY region order by total_spent DESC) AS customer_rank
+FROM total_spending)
+
+SELECT
+	*
+FROM assign_rank
+WHERE customer_rank < 3;
